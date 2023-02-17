@@ -1,0 +1,14 @@
+name: TOBIAS_ENV
+
+channels:
+  - bioconda
+  - conda-forge
+
+dependencies:
+  - python=3
+  - gimmemotifs
+  - sklearn-contrib-lightning
+  - pip
+  - pip:
+    - tobias>=0.9
+

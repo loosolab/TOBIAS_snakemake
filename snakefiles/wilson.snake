@@ -1,0 +1,98 @@
+import os
+from snakemake.remote.HTTP import RemoteProvider as HTTPRemoteProvider
+
+HTTP = HTTPRemoteProvider()
+
+#Download the wilson app
+rule wilson_app:
+	input: 
+		HTTP.remote("https://github.molgen.mpg.de/loosolab/wilson-apps/archive/master.zip", keep_local = True)
+	output: 
+		app = os.path.join(OUTPUTDIR, "wilson", "app.R"),
+		flag = os.path.join(OUTPUTDIR, "wilson", "wilson_installed.txt")
+	log:
+		os.path.join(OUTPUTDIR, "logs", "wilson_installation.log")
+	params:
+		wilsondir = os.path.join(OUTPUTDIR, "wilson"),
+		scripts = scripts_dir
+	conda:
+		"../environments/wilson.yaml"
+	shell:
+		"mkdir -p {params.wilsondir}; "
+		"unzip -o {input} -d {params.wilsondir}; "
+		"cp -a {params.wilsondir}/wilson-apps-master/wilson-basic/. {params.wilsondir}; "
+		"rm -rf {params.wilsondir}/wilson-apps-master/; "
+		"rm -rf {params.wilsondir}/data/*;"
+		"Rscript {params.scripts}/install_wilson.R &> {log};"
+		"touch {output.flag}"
+
+#Make file of condition names to use for wilson conversion
+rule get_condition_names:
+	output:
+		os.path.join(OUTPUTDIR, "wilson", "condition_names.txt")	#will be deleted when all .clarion were made
+	params:
+		"\"{0}\"".format("\n".join(CONDITION_IDS) + "\n")
+	shell:
+		"printf {params} > {output}"
+
+#Convert TF-specific overviews 
+rule convert_individual_overview:
+	input: 
+		overview = os.path.join(OUTPUTDIR, "TFBS", "{TF}", "{TF}_overview.txt"),
+		condition_names = os.path.join(OUTPUTDIR, "wilson", "condition_names.txt"),
+		app = rules.wilson_app.output
+	params:
+		scripts = scripts_dir
+	conda:
+		"../environments/wilson.yaml"
+	output:
+		os.path.join(OUTPUTDIR, "wilson", "data", "{TF}_overview.clarion")
+	log:
+		os.path.join(OUTPUTDIR, "logs", "wilson", "{TF}_convert_individual_overview.log")
+	shell:
+		"Rscript {params.scripts}/convert_data.R --input {input.overview} --output {output} --condition_names {input.condition_names} &> {log} "
+
+#Convert global bindetect-output:
+rule convert_global_overview:
+	input:
+		overview = lambda wildcards: glob_wildcards(os.path.join(checkpoints.bindetect.get(**wildcards).output[0], "bindetect_overview.txt")),
+		condition_names = os.path.join(OUTPUTDIR, "wilson", "condition_names.txt"),
+		app = rules.wilson_app.output
+	output:
+		os.path.join(OUTPUTDIR, "wilson", "data", "bindetect_results.clarion")
+	log:
+		os.path.join(OUTPUTDIR, "logs", "wilson", "convert_global_overview.log")
+	params: 
+		overview = os.path.join(OUTPUTDIR, "overview", "*_results.txt"),
+		scripts = scripts_dir
+	conda:
+		"../environments/wilson.yaml"
+	shell:
+		"Rscript {params.scripts}/convert_data.R --input {params.overview} --output {output} --condition_names {input.condition_names} &> {log} "
+
+rule wilson_howto:
+	input:	
+		individual_overview = lambda wildcards: expand(os.path.join(OUTPUTDIR, "wilson", "data", "{TF}_overview.clarion"), TF=get_TF_ids(wildcards)),
+		global_overview = os.path.join(OUTPUTDIR, "wilson", "data", "bindetect_results.clarion"),
+		app = rules.wilson_app.output.app
+	output:
+		os.path.join(OUTPUTDIR, "wilson", "HOW_TO_WILSON.txt")
+	run:
+		
+		f = open(output[0], "w")
+
+		howto = """The wilson app (https://github.molgen.mpg.de/loosolab/wilson-apps) can be started by running the app.R within the wilson directory. 
+To do so, run the following code in R (or RStudio):
+
+''
+if (!require(shiny)) install.packages("shiny"); library(shiny)
+""" 
+		howto += "runApp(\"{0}\")\n''\n".format(os.path.abspath(input.app))
+		howto += """
+Now your browser will open and you can start using the app. If this is not the case try opening the link displayed in your console manually.
+
+Note that unlike normal scripts the app will not terminate on its own so please make sure to close the respective process after you are done.
+"""
+
+		f.write(howto)
+		f.close()

@@ -1,0 +1,25 @@
+name: uropa_env
+
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python
+  - numpy <1.16
+  - pysam >=0.15.3
+  - r-base
+  - r-ggplot2
+  - r-gplots
+  - r-gridextra
+  - r-jsonlite
+  - r-venndiagram
+  - r-getopt
+  - r-tidyr
+  - r-upsetr
+  - bioconductor-graph
+  - bioconductor-rbgl
+  - pip
+  - pip:
+    - uropa #hack for incompatible packages

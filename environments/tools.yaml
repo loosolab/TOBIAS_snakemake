@@ -1,0 +1,15 @@
+name: tools_env
+
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  
+dependencies:
+  - python<3.10 #limit due to deprecation error in intervene
+  - bedtools
+  - igvtools
+  - r-upsetr
+  - r-corrplot
+  - r-cairo
+  - intervene

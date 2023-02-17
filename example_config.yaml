@@ -1,0 +1,34 @@
+#-------------------------------------------------------------------------#
+#-------------------------- TOBIAS input data ----------------------------#
+#-------------------------------------------------------------------------#
+
+data:
+  Bcell: [data/Bcell_chr4.bam]                                   #list of .bam-files
+  Tcell: [data/Tcell_chr4_*.bam]  #list of .bam-files
+  
+run_info:
+  organism: human                           #mouse/human/zebrafish
+  fasta: data/genome_chr4.fa.gz             #.fasta-file containing organism genome. NOTE: must be uncompressed .fa or bgzip compressed compatible with samtools
+  blacklist: data/blacklist_chr4.bed        #.bed-file containing blacklisted regions
+  gtf: data/genes_chr4.gtf                  #.gtf-file for annotation of peaks. NOTE: must be uncompressed .gtf
+  motifs: data/individual_motifs/*          #motifs (directory with files or individual files in MEME/JASPAR/PFM format)
+  output: test_output                       #output directory 
+  #peaks: data/annotated_peaks.bed          #optional; pre-calculated annotated peaks
+  #peaks_header: data/annotated_peaks_header.txt #optional; header for pre-calculated annotated peaks
+
+#Flags for parts of pipeline to include/exclude (all are True by default)
+flags:
+  plot_comparison: True #True/False
+  plot_correction: True
+  plot_venn: True
+  coverage: True
+  wilson: True
+
+#-------------------------------------------------------------------------#
+#----------------------- Default module parameters -----------------------#
+#-------------------------------------------------------------------------#
+
+macs: "--nomodel --shift -100 --extsize 200 --broad"
+atacorrect: ""
+footprinting: ""
+bindetect: ""

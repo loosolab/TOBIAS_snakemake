@@ -1,0 +1,38 @@
+name: wilson_env
+
+channels:
+  - bioconda
+  - conda-forge
+  
+dependencies:
+  - unzip
+  - r-base
+  - r-devtools
+  - r-foreign
+  - r-curl=4.3.1
+  - r-nloptr
+  - r-stringi
+  - r-shiny
+  - r-ggplot2
+  - r-plotly
+  - r-scales
+  - r-shinydashboard
+  - r-reshape
+  - r-colourpicker
+  - r-shinyjs
+  - r-viridis
+  - r-rje
+  - r-circlize
+  - bioconductor-complexheatmap
+  - r-gplots
+  - r-rintrojs
+  - r-ggrepel
+  - bioconductor-deseq2
+  - r-rjson
+  - r-factominer
+  - r-factoextra
+  - r-heatmaply
+  - r-shinycssloaders
+  - r-log4r
+  - r-rjsonio
+  - r-optparse

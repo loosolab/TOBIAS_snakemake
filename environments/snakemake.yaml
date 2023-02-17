@@ -1,0 +1,13 @@
+name: tobias_snakemake_env
+
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  - python
+  - mamba
+  - igvtools
+  - samtools
+  - snakemake>=5.4,!=6.4 #upper limit due to update_checkpoint_dependencies KeyError
