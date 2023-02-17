@@ -11,4 +11,5 @@ dependencies:
   - pip
   - pip:
     - tobias>=0.9
-
+    - adjustText<0.8
+    - pypdf2<3.0  # PdfFileMerger is deprecated in 3.0
