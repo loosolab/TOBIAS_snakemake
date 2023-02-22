@@ -7,6 +7,7 @@ import subprocess
 import itertools
 import glob
 import datetime
+import re
 
 snakemake.utils.min_version("5.4")	#for checkpoints functionality
 
@@ -78,6 +79,10 @@ if len(config["data"]) > 0:
 	for condition in config["data"]:
 		if len(config["data"][condition]) == 0:
 			print("ERROR: Could not find any bamfiles in \"{0}\" in configfile {1}".format(":".join(("data", condition)), CONFIGFILE))
+		# Check for unwanted characters in condition names
+		elif re.search(re.compile(r"[^a-zA-Z0-9\-_\.]+"), condition) is not None:
+			print(f"Error: The name of condition \"{condition}\" contains characters not in \"[a-zA-Z0-9\-_\.]\".")
+			sys.exit(1)
 else:
 	print("ERROR: Could not find any conditions (\"data:\{condition\}\") in configfile {0}".format(CONFIGFILE))
 	sys.exit()
