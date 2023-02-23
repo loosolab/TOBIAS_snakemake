@@ -9,6 +9,6 @@ dependencies:
   - python
   - mamba>=0.27
   - igvtools
-  - samtools
+  - samtools>=1.9 #limit due to "faidx: invalid option -- '-'" error
   - snakemake>=5.4,!=6.4 #upper limit due to update_checkpoint_dependencies KeyError
   - tobias>=0.11 #to make sure DownloadData is available
