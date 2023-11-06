@@ -8,6 +8,7 @@ dependencies:
   - python=3
   - gimmemotifs
   - sklearn-contrib-lightning
+  - matplotlib<3.8  # fix for 'matplotlib.cbook' has no attribute 'mplDeprecation'
   - pip
   - pip:
     - tobias>=0.9
