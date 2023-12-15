@@ -41,6 +41,6 @@ $ snakemake --configfile example_config.yaml --use-conda --cores 10 --conda-pref
 
 More information on input/output is found in the [wiki](https://github.com/loosolab/TOBIAS_snakemake/wiki)
 
-Contact
-------------
-Mette Bentsen (mette.bentsen (at) mpi-bn.mpg.de)
+Help 
+--------
+In case of any issues/questions/comments, please write an issue [here](https://github.com/loosolab/TOBIAS_snakemake/issues).
