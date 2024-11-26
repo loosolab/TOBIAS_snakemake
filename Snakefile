@@ -40,10 +40,10 @@ shell.executable("/bin/bash")
 
 #Constrain wildcards to not jump into directories
 wildcard_constraints:
-	condition = "[a-zA-Z0-9\-_\.]+",
-	TF = "[a-zA-Z0-9\-_\.]+",
-	state = "bound|unbound",
-	plotname = "[a-zA-Z0-9\-_\.]+",
+	condition = r"[a-zA-Z0-9\-_\.]+",
+	TF = r"[a-zA-Z0-9\-_\.]+",
+	state = r"bound|unbound",
+	plotname = r"[a-zA-Z0-9\-_\.]+",
 
 #Save timestamp to config
 config["timestamp"] = str(datetime.datetime.now())
@@ -81,10 +81,10 @@ if len(config["data"]) > 0:
 			print("ERROR: Could not find any bamfiles in \"{0}\" in configfile {1}".format(":".join(("data", condition)), CONFIGFILE))
 		# Check for unwanted characters in condition names
 		elif re.search(re.compile(r"[^a-zA-Z0-9\-_\.]+"), condition) is not None:
-			print(f"Error: The name of condition \"{condition}\" contains characters not in \"[a-zA-Z0-9\-_\.]\".")
+			print(rf"Error: The name of condition \"{condition}\" contains characters not in \"[a-zA-Z0-9\-_\.]\".")
 			sys.exit(1)
 else:
-	print("ERROR: Could not find any conditions (\"data:\{condition\}\") in configfile {0}".format(CONFIGFILE))
+	print(r"ERROR: Could not find any conditions (\"data:\{condition\}\") in configfile {0}".format(CONFIGFILE))
 	sys.exit()
 
 

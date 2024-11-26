@@ -18,12 +18,12 @@ def check_format(file):
 				break
 
 	#Bed file
-	if re.match("(^.+\s\d+\s\d+.*\n)+", file_content):
+	if re.match(r"(^.+\s\d+\s\d+.*\n)+", file_content):
 		found_format = "bed"
 		#print("{0} is a .bed-file".format(file))
 
 	#Jaspar file
-	elif re.match("(>.+\n([^>]+\n){4})+.*", file_content): 
+	elif re.match(r"(>.+\n([^>]+\n){4})+.*", file_content): 
 		found_format = "jaspar"
 		#print("{0} is a jaspar pfm file".format(file))
 
