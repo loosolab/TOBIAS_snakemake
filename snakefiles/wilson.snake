@@ -1,12 +1,9 @@
 import os
-from snakemake.remote.HTTP import RemoteProvider as HTTPRemoteProvider
-
-HTTP = HTTPRemoteProvider()
 
 #Download the wilson app
 rule wilson_app:
 	input: 
-		HTTP.remote("https://github.molgen.mpg.de/loosolab/wilson-apps/archive/master.zip", keep_local = True)
+		storage.http("https://github.molgen.mpg.de/loosolab/wilson-apps/archive/master.zip", keep_local = True)
 	output: 
 		app = os.path.join(OUTPUTDIR, "wilson", "app.R"),
 		flag = os.path.join(OUTPUTDIR, "wilson", "wilson_installed.txt")
