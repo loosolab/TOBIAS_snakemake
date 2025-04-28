@@ -6,4 +6,4 @@ channels:
   
 dependencies:
   - python
-  - macs2
+  - macs3
