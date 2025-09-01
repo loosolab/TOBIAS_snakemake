@@ -11,5 +11,5 @@ dependencies:
   - igvtools
   - samtools>=1.9 #limit due to "faidx: invalid option -- '-'" error
   - snakemake>=8.0 #to ensure snakemake plugin support
-  - tobias>=0.11 #to make sure DownloadData is available
+  - tobias>=0.17 #to make sure DownloadData is available
   - snakemake-storage-plugin-http #to download the wilson-app

@@ -11,6 +11,6 @@ dependencies:
   - matplotlib<3.8  # fix for 'matplotlib.cbook' has no attribute 'mplDeprecation'
   - pip
   - pip:
-    - tobias>=0.9
+    - tobias>=0.17
     - adjustText<0.8
     - pypdf2<3.0  # PdfFileMerger is deprecated in 3.0
