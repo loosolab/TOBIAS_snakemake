@@ -3,7 +3,6 @@ name: coverage_env
 channels:
   - bioconda
   - conda-forge
-  - defaults
 
 dependencies:
   - bedtools
