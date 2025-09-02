@@ -3,7 +3,6 @@ name: tobias_snakemake_env
 channels:
   - conda-forge
   - bioconda
-  - defaults
 
 dependencies:
   - python
