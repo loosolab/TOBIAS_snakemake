@@ -9,8 +9,8 @@ dependencies:
   - gimmemotifs
   - sklearn-contrib-lightning
   - matplotlib<3.8  # fix for 'matplotlib.cbook' has no attribute 'mplDeprecation'
+  - tobias>=0.17
   - pip
   - pip:
-    - tobias>=0.17
     - adjustText
     - pypdf2<3.0  # PdfFileMerger is deprecated in 3.0
